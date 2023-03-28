@@ -1,10 +1,7 @@
 import {inject} from '@loopback/core';
 import {
-  Request,
-  RestBindings,
-  get,
-  response,
-  ResponseObject,
+  get, Request, response,
+  ResponseObject, RestBindings
 } from '@loopback/rest';
 
 /**
@@ -38,7 +35,7 @@ const PING_RESPONSE: ResponseObject = {
  * A simple controller to bounce back http requests
  */
 export class PingController {
-  constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
+  constructor(@inject(RestBindings.Http.REQUEST) private req: Request) { }
 
   // Map to `GET /ping`
   @get('/ping')
@@ -51,5 +48,14 @@ export class PingController {
       url: this.req.url,
       headers: Object.assign({}, this.req.headers),
     };
+  }
+
+  @get('/hello')
+  hello(): object {
+    console.log(this.req.acceptsLanguages());
+    return {
+      greeting: 'Hello world!',
+      country: 'England'
+    }
   }
 }
